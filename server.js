@@ -1,3 +1,4 @@
+const bodyParser = require("body-parser");
 var express = require("express"),
   http = require("http"),
   fs = require("fs"),
@@ -17,6 +18,9 @@ var corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
 
 const db = require("./models");
 db.mongoose
@@ -51,7 +55,7 @@ app.get("/", (req, res) => {
 require("./routes/movie.routes")(app);
 require("./routes/artist.routes")(app);
 require("./routes/genre.routes")(app);
-// require("./routes/user.routes")(app)
+require("./routes/user.routes")(app)
 
 app.listen(PORT, function () {
   console.log("express has started on port ", PORT);
